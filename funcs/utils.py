@@ -1,3 +1,4 @@
+import os
 import io
 import pandas as pd
 from googleapiclient.discovery import build
@@ -27,15 +28,44 @@ def download_and_process_csv():
     f = process_unified_sheet(f)
     return f
 
-# function to upload file to google drive asa google sheets
-def upload_file_to_google_drive(df : pd.DataFrame):
-    file_metadata = {
-        'name': 'unified',
-        'mimeType': 'application/vnd.google-apps.spreadsheet'
-    }
-    media = MediaFileUpload('data/unified.csv', mimetype='text/csv')
-    file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-    return file.get('id')
+# function that takes as input a pandas dataframe and uploads it to google drive as a sheet file
+def upload_dataframe_to_drive(dataframe):
+    """
+    Uploads a Pandas DataFrame to Google Drive as a Google Sheets file with the same FILE_ID.
+
+    :param dataframe: Pandas DataFrame to upload.
+    """
+    # Export the DataFrame to a temporary CSV file
+    temp_csv_file = 'temp_dataframe.csv'
+    dataframe.to_csv(temp_csv_file, index=False)
+
+    # Create a media file upload request
+    media_body = MediaFileUpload(temp_csv_file, mimetype='text/csv', resumable=True)
+
+    # Update the existing file with the same FILE_ID
+    drive_service.files().update(fileId=FILE_ID, media_body=media_body).execute()
+
+    # Delete the temporary CSV file
+    os.remove(temp_csv_file)
+
+
+
+
+# def upload_df_to_drive(df):
+#     file_name = 'unified'
+#     df.to_csv(file_name, encoding='utf-8', index=False)
+#     file_metadata = {
+#         'name': file_name,
+#         'mimeType': 'application/vnd.google-apps.spreadsheet'
+#     }
+#     media = MediaFileUpload(file_name,
+#                             mimetype='application/vnd.google-apps.spreadsheet',
+#                             resumable=True)
+#     created = drive_service.files().create(body=file_metadata,
+#                                            media_body=media,
+#                                            fields='id').execute()
+#     print('File ID: {}'.format(created.get('id')))
+
 
 
 #### PROCESSING ####

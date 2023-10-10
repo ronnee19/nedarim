@@ -3,9 +3,9 @@
 
 import pandas as pd
 import streamlit as st
-from funcs.utils import download_and_process_csv
+from funcs.utils import download_and_process_csv, upload_dataframe_to_drive
 
-# st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 st.markdown("""
 <style>
 body {
@@ -34,6 +34,10 @@ else:
 # write the table in the center of the page
 st.write(st.session_state['uni_data'][cols])
 
+
+if st.button('save'):
+    upload_dataframe_to_drive(st.session_state['uni_data'])
+    st.write('הטבלה נשמרה בהצלחה')
 
 # download csv button
 
