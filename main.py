@@ -23,7 +23,7 @@ else:
     cols = ['שם', 'שם משפחה', 'ת.ז.', 'מין', 'גיל', 'אזרח/ית / חייל/ת', 'טלפון 1 של הנעדר/ת', 'שם המדווח/ת 1', 'טלפון של המדווח/ת 1']
 
 
-st.write(st.session_state['uni_data'][cols])
+st.write(st.session_state['uni_data'][cols], direction='rtl')
 
 # download csv button
 

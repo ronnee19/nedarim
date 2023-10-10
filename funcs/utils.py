@@ -9,6 +9,9 @@ def get_unified_data():
     # fill na with empty string
     data = data.fillna('')
     
+    # add columns:
+    if 'שם באנגלית' not in data.columns:
+        data['שם באנגלית'] = ''
     return data
 
 
