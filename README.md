@@ -25,3 +25,22 @@ The command to run the app locally:
 Link to production:
 https://nedarim-icfb24kwtfz6vpz9bypp2z.streamlit.app/
 
+# To configure postgress DB:
+
+To switch connection into postgress database do the following:
+
+Create a file: "[project dir]/.streamlit/secrets.toml"
+put the following in the file
+
+[connections.postgresql]
+dialect = "postgresql"  
+host = "localhost"  
+port = "5432"  
+database = "xxx"  
+username = "xxx"  
+password = "xxx"  
+
+get creds/details from David Oz via secured way
+
+make sure you turn the db on flag on python main.py file
+

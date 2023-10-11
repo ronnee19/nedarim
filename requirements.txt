@@ -3,6 +3,8 @@ streamlit
 pandas
 numpy
 streamlit>=1.22
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.21
 google-auth
 google-auth-httplib2
 google-auth-oauthlib
