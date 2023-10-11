@@ -9,10 +9,10 @@ from datetime import datetime
 
 
 # AWS credentials
-AWS_ACCESS_KEY_ID = st.secrets['AWS_ACCESS_KEY_ID'] # 'AKIAUIWGZP2QVS2GABQ3'
-AWS_SECRET_ACCESS_KEY = st.secrets['AWS_SECRET_ACCESS_KEY'] #'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'
-AWS_REGION_NAME = st.secrets['AWS_REGION_NAME'] #'eu-west-1'
-AWS_BUCKET_NAME = st.secrets['AWS_BUCKET_NAME'] # 'hamal-raw-01-test'
+AWS_ACCESS_KEY_ID = st.secrets['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = st.secrets['AWS_SECRET_ACCESS_KEY'] 
+AWS_REGION_NAME = st.secrets['AWS_REGION_NAME'] 
+AWS_BUCKET_NAME = st.secrets['AWS_BUCKET_NAME'] 
 
 # Create an S3 client
 s3 = boto3.client('s3', 
@@ -33,7 +33,7 @@ def upload_to_s3(file, person_name):
         st.error(f"Failed to upload {person_name} to S3: {e}")
 
 def main():
-    st.title("Image Upload App")
+    st.title("העלאת תמונות: כחול")
 
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     image_name = st.text_input("Enter Image Name")
