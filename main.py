@@ -5,11 +5,11 @@ import pandas as pd
 import streamlit as st
 from funcs.utils import download_and_process_csv, upload_dataframe_to_drive
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="מאגר הנעדרים המאוחד", layout="wide")
 st.markdown("""
 <style>
 body {
-  unicode-bidi:bidi-override;
+  unicode-bidi:bidi-override;   
   direction: RTL;
 }
 [data-testid=column] [data-testid=stVerticalBlock]{
@@ -17,8 +17,9 @@ body {
 }
 </style>
     """, unsafe_allow_html=True)
+st.header("מאגר הנעדרים המאוגד")
+st.subheader("טבלה זו מציגה נעדרים מרישמות פיקוד העורף, פורום משפחות הנעדרים, ממתנדבים האוגרים מידע על נעדרים וממארגני מסיבת NOVA")
 
-st.header('טבלת נעדרים')
 
 
 # data = get_unified_data()
