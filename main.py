@@ -34,7 +34,9 @@ def upload_to_s3(file, person_name):
         st.error(f"Failed to upload {person_name} to S3: {e}")
 
 def check_format(s):
-    pattern = re.compile("^[a-zA-Z]+_[a-zA-Z]+_[0-9]+_[0-9]+$")
+    # pattern = re.compile("^[a-zA-Z]+_[a-zA-Z]+_[0-9]+_[0-9]+$")
+    pattern = re.compile("^([a-zA-Z]+_)+[a-zA-Z]+_[0-9]+_[0-9]+(\.[a-zA-Z]+)?$")
+
     if pattern.match(s):
         return True
     else:
@@ -44,7 +46,7 @@ def main():
     st.title("העלאת תמונות: כחול")
 
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
-    image_name = st.text_input("Enter Image Name")
+    image_name = st.text_input("הקלד את שם התמונה:", value=image_file.name if image_file else '')
     
     # enfoce format of image name, if there is space in image, streamlit error
     if not check_format(image_name):
@@ -67,7 +69,7 @@ def main():
             #     # st.image(image, caption='Uploaded Image.', use_column_width=True)
             #     st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
             
-            if st.button("Save to S3"):
+            if st.button("העלה תמונה"):
                 # Convert the image to bytes
                 img_byte_arr = io.BytesIO()
                 image.save(img_byte_arr, format='PNG')
@@ -78,4 +80,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
