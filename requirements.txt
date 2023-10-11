@@ -1,11 +1,5 @@
-st-gsheets-connection
 streamlit
 pandas
 numpy
 streamlit>=1.22
-google-auth
-google-auth-httplib2
-google-auth-oauthlib
-google-api-python-client
-pydrive
 boto3

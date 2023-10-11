@@ -4,3 +4,4 @@ bin/
 get-pip.py
 lib/
 pyvenv.cfg
+.streamlit/secrets.toml

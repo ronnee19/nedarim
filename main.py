@@ -9,10 +9,10 @@ from datetime import datetime
 
 
 # AWS credentials
-AWS_ACCESS_KEY_ID = 'AKIAUIWGZP2QVS2GABQ3'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_REGION_NAME = 'eu-west-1'
-AWS_BUCKET_NAME = 'hamal-raw-01-test'
+AWS_ACCESS_KEY_ID = st.secrets['AWS_ACCESS_KEY_ID'] # 'AKIAUIWGZP2QVS2GABQ3'
+AWS_SECRET_ACCESS_KEY = st.secrets['AWS_SECRET_ACCESS_KEY'] #'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'
+AWS_REGION_NAME = st.secrets['AWS_REGION_NAME'] #'eu-west-1'
+AWS_BUCKET_NAME = st.secrets['AWS_BUCKET_NAME'] # 'hamal-raw-01-test'
 
 # Create an S3 client
 s3 = boto3.client('s3', 
@@ -49,10 +49,10 @@ def main():
         st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
 
         # add an option to rotate the image file
-        if st.button('Rotate'):
-            image = image.rotate(90)
-            # st.image(image, caption='Uploaded Image.', use_column_width=True)
-            st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
+        # if st.button('Rotate'):
+        #     image = image.rotate(90)
+        #     # st.image(image, caption='Uploaded Image.', use_column_width=True)
+        #     st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
         
         if st.button("Save to S3"):
             # Convert the image to bytes
