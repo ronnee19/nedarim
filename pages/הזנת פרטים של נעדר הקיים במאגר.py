@@ -19,7 +19,7 @@ body {
 import streamlit as st
 import pandas as pd
 
-st.title('מילוי מידע נעדר קיים')
+st.title('מילוי מידע נעדר הקיים במערכת')
 
 a1, a2 = st.columns([1, 1])
 full_name = a1.selectbox(label= 'בחר שם', options=st.session_state['uni_data']["שם מלא"])
