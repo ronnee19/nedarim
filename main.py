@@ -1,6 +1,8 @@
 # streamlit run main.py
 # make a dashboard that shows the data set
 
+DB_ON = False
+
 import pandas as pd
 import streamlit as st
 from funcs.utils import download_and_process_csv, upload_dataframe_to_drive
@@ -25,22 +27,29 @@ st.header('טבלת נעדרים')
 
 st.session_state['uni_data'] = download_and_process_csv()
 
-# use the abot to create a tab  le columns
-if st.checkbox('הצג את כל העמודות'):
-    cols = st.session_state['uni_data'].columns
-else:
-    cols = ['שם', 'שם משפחה', 'ת.ז.', 'מין', 'גיל', 'אזרח/ית / חייל/ת', 'טלפון 1 של הנעדר/ת', 'שם המדווח/ת 1', 'טלפון של המדווח/ת 1']
+if not DB_ON:
+    # use the abot to create a tab  le columns
+    if st.checkbox('הצג את כל העמודות'):
+        cols = st.session_state['uni_data'].columns
+    else:
+        cols = ['שם', 'שם משפחה', 'ת.ז.', 'מין', 'גיל', 'אזרח/ית / חייל/ת', 'טלפון 1 של הנעדר/ת', 'שם המדווח/ת 1', 'טלפון של המדווח/ת 1']
 
-# write the table in the center of the page
-st.write(st.session_state['uni_data'][cols])
+    # write the table in the center of the page
+    st.write(st.session_state['uni_data'][cols])
 
 
-if st.button('save'):
-    upload_dataframe_to_drive(st.session_state['uni_data'])
-    st.write('הטבלה נשמרה בהצלחה')
+    if st.button('save'):
+        upload_dataframe_to_drive(st.session_state['uni_data'])
+        st.write('הטבלה נשמרה בהצלחה')
 
 # download csv button
 
 
 # st.line_chart(data)
+else:
+    conn = st.experimental_connection("postgresql", type="sql")
+    df = conn.query('SELECT * FROM mytable;', ttl="10m")
+    for row in df.itertuples():
+        st.write(f"{row.name} has a :{row.pet}:")
+
 
