@@ -6,6 +6,7 @@ import boto3
 from PIL import Image
 import io
 from datetime import datetime
+import re
 
 
 # AWS credentials
@@ -32,36 +33,48 @@ def upload_to_s3(file, person_name):
     except Exception as e:
         st.error(f"Failed to upload {person_name} to S3: {e}")
 
+def check_format(s):
+    pattern = re.compile("^[a-zA-Z]+_[a-zA-Z]+_[0-9]+_[0-9]+$")
+    if pattern.match(s):
+        return True
+    else:
+        return False
+
 def main():
     st.title("העלאת תמונות: כחול")
 
     image_file = st.file_uploader("Upload Image", type=['png', 'jpg', 'jpeg'])
     image_name = st.text_input("Enter Image Name")
-    # add if there is no . in image_name, add .png
-    if image_name and '.' not in image_name:
-        image_name += '.png'
-        
+    
+    # enfoce format of image name, if there is space in image, streamlit error
+    if not check_format(image_name):
+        st.error('פורמט שגוי. צריך להיות:    frstname_lastname_id_number')
+    else:
+        image_name = image_name.lower()
+        if image_name and '.' not in image_name:
+            image_name += '.png'
+            
 
-    if image_file and image_name:
-        image = Image.open(image_file)
-        # show the image in small size
-        # st.image(image, caption='Uploaded Image.', use_column_width=True)
-        st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
+        if image_file and image_name:
+            image = Image.open(image_file)
+            # show the image in small size
+            # st.image(image, caption='Uploaded Image.', use_column_width=True)
+            st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
 
-        # add an option to rotate the image file
-        # if st.button('Rotate'):
-        #     image = image.rotate(90)
-        #     # st.image(image, caption='Uploaded Image.', use_column_width=True)
-        #     st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
-        
-        if st.button("Save to S3"):
-            # Convert the image to bytes
-            img_byte_arr = io.BytesIO()
-            image.save(img_byte_arr, format='PNG')
-            img_byte_arr = img_byte_arr.getvalue()
+            # add an option to rotate the image file
+            # if st.button('Rotate'):
+            #     image = image.rotate(90)
+            #     # st.image(image, caption='Uploaded Image.', use_column_width=True)
+            #     st.image(image, caption='Uploaded Image.', use_column_width=False, width=300)
+            
+            if st.button("Save to S3"):
+                # Convert the image to bytes
+                img_byte_arr = io.BytesIO()
+                image.save(img_byte_arr, format='PNG')
+                img_byte_arr = img_byte_arr.getvalue()
 
-            # Upload to S3
-            upload_to_s3(io.BytesIO(img_byte_arr), image_name)
+                # Upload to S3
+                upload_to_s3(io.BytesIO(img_byte_arr), image_name)
 
 if __name__ == "__main__":
     main()
