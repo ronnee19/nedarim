@@ -26,7 +26,7 @@ st.header('טבלת נעדרים')
 # data = get_unified_data()
 
 st.session_state['uni_data'] = download_and_process_csv()
-
+# currently psql is in dev mode.
 if not USE_PSQL:
     # use the abot to create a tab  le columns
     if st.checkbox('הצג את כל העמודות'):
