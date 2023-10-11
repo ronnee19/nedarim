@@ -21,12 +21,19 @@ s3 = boto3.client('s3',
                   aws_secret_access_key=AWS_SECRET_ACCESS_KEY, 
                   region_name=AWS_REGION_NAME)
 
-def upload_to_s3(file, person_name):
+def upload_to_s3(file, image_name):
     try:
-        current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
-        folder_name = person_name.split('.')[0]
-        suffix = person_name.split('.')[1]
-        filename = f"{folder_name}/{folder_name}_{current_datetime}.{suffix}"
+        # person name is until the first _{number}
+        splitted = image_name.split('_')
+        n_pic = splitted[-1].split('.')[0]
+        pic_format = splitted[-1].split('.')[1]
+        person_idx = splitted[-2]
+        person_name = '_'.join(splitted[:-2])
+        
+        # person_name = image_name
+        # current_datetime = datetime.now().strftime("%Y%m%d%H%M%S")
+        folder_name = person_name
+        filename = f"{folder_name}/{image_name}"
         
         s3.upload_fileobj(file, AWS_BUCKET_NAME, filename)
         st.success(f"Successfully uploaded {filename} to S3")
