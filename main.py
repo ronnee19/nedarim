@@ -1,7 +1,7 @@
 # streamlit run main.py
 # make a dashboard that shows the data set
 
-DB_ON = False
+USE_PSQL = False
 
 import pandas as pd
 import streamlit as st
@@ -27,7 +27,7 @@ st.header('טבלת נעדרים')
 
 st.session_state['uni_data'] = download_and_process_csv()
 
-if not DB_ON:
+if not USE_PSQL:
     # use the abot to create a tab  le columns
     if st.checkbox('הצג את כל העמודות'):
         cols = st.session_state['uni_data'].columns
