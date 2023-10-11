@@ -1,6 +1,5 @@
-# nedarim
-
 # Iron Sords - Finding missing persons
+
 ## Local development:
 In order to run in your own local env, please run the following:
 
