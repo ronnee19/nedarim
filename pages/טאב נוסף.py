@@ -13,4 +13,4 @@
 #     st.write(f"{row.name} has a :{row.pet}:")
 
 # print all the installed packages with their versions
-print(pip freeze)
+print("pip freeze")
